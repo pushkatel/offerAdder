@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Button Clicker",
+  "version": "1.0",
+  "description": "Finds and clicks all buttons on a webpage",
+  "permissions": ["scripting", "tabs", "storage"],
+  "host_permissions": ["https://*.americanexpress.com/*", "https://*.chase.com/*"],
+  "icons": {
+    "16": "coin.png",
+    "48": "coin.png",
+    "128": "coin.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Click All Buttons",
+    "default_icon": "coin.png"
+  }
+}
