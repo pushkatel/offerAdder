@@ -6,13 +6,12 @@
   "permissions": ["scripting", "tabs", "storage"],
   "host_permissions": ["https://*.americanexpress.com/*", "https://*.chase.com/*"],
   "icons": {
-    "16": "coin.png",
-    "48": "coin.png",
-    "128": "coin.png"
+    "48": "/assets/round48.png",
+    "128": "/assets/round128.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Add All Offers",
-    "default_icon": "coin.png"
+    "default_icon": "/assets/round128.png"
   }
 }
