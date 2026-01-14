@@ -91,15 +91,19 @@ function clickAmexButtons() {
 }
 
 async function clickChaseButtons() {
-  const container = document.querySelector('[data-testid="grid-items-container"]');
-  if (!container) return 0;
+  const containers = document.querySelectorAll(
+    '[data-testid="grid-items-container"], [data-testid="carousel-curation-category-offer-tile-list-container"], [data-testid="carousel-featured-category-offer-tile-list-container"]'
+  );
+  if (!containers.length) return 0;
 
-  const buttons = container.querySelectorAll('[role="button"]');
   let count = 0;
 
-  for (const button of buttons) {
-    button.click();
-    count++;
+  for (const container of containers) {
+    const buttons = container.querySelectorAll('[role="button"]');
+    for (const button of buttons) {
+      button.click();
+      count++;
+    }
   }
 
   return count;
