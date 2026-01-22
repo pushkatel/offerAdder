@@ -21,7 +21,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
   } else if (isAmex) {
     addButton.textContent = 'Add All Amex Offers';
   } else {
-    addButton.textContent = 'Add All Offers';
+    addButton.textContent = 'Navigate to offers page to Add All Offers';
     addButton.disabled = true;
     addButton.classList.add('disabled');
     status.textContent = 'Navigate to Chase or Amex offers page to use this extension';
