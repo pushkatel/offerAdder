@@ -5,6 +5,16 @@
   "description": "Automatically adds all Chase and Amex Offers to your account with one click.",
   "permissions": ["scripting", "tabs", "storage"],
   "host_permissions": ["https://*.americanexpress.com/*", "https://*.chase.com/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "offers-adder@example.com",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    },
+    "gecko_android": {}
+  },
   "icons": {
     "48": "/assets/round48.png",
     "128": "/assets/round128.png"

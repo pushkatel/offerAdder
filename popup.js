@@ -1,5 +1,8 @@
+// Cross-browser API wrapper (works on Chrome and Firefox)
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 // Load and display counts on popup open
-chrome.storage.local.get(['amexClicks', 'chaseClicks'], (result) => {
+browserAPI.storage.local.get(['amexClicks', 'chaseClicks']).then((result) => {
   const amexTotal = result.amexClicks || 0;
   const chaseTotal = result.chaseClicks || 0;
   document.getElementById('amexTotal').textContent = `Amex: ${amexTotal}`;
@@ -10,7 +13,7 @@ chrome.storage.local.get(['amexClicks', 'chaseClicks'], (result) => {
 const chasePattern = /chase\.com.*merchantOffers/i;
 
 // Update button text based on current URL
-chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+browserAPI.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
   const isChase = chasePattern.test(tab.url);
   const isAmex = tab.url.includes('americanexpress.com/offers');
   const addButton = document.getElementById('addAll');
@@ -29,7 +32,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
 });
 
 document.getElementById('addAll').addEventListener('click', async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await browserAPI.tabs.query({ active: true, currentWindow: true });
 
   const isAmex = tab.url.includes('americanexpress.com/offers');
   const isChase = chasePattern.test(tab.url);
@@ -42,9 +45,9 @@ document.getElementById('addAll').addEventListener('click', async () => {
 
   const clickFunction = isChase ? clickChaseButtons : clickAmexButtons;
 
-  const results = await chrome.scripting.executeScript({
+  const results = await browserAPI.scripting.executeScript({
     target: { tabId: tab.id },
-    function: clickFunction
+    func: clickFunction
   });
 
   const count = results[0].result;
@@ -54,11 +57,10 @@ document.getElementById('addAll').addEventListener('click', async () => {
   const displayId = isChase ? 'chaseTotal' : 'amexTotal';
   const label = isChase ? 'Chase' : 'Amex';
 
-  chrome.storage.local.get([storageKey], (result) => {
-    const newTotal = (result[storageKey] || 0) + count;
-    chrome.storage.local.set({ [storageKey]: newTotal });
-    document.getElementById(displayId).textContent = `${label}: ${newTotal}`;
-  });
+  const storageResult = await browserAPI.storage.local.get([storageKey]);
+  const newTotal = (storageResult[storageKey] || 0) + count;
+  await browserAPI.storage.local.set({ [storageKey]: newTotal });
+  document.getElementById(displayId).textContent = `${label}: ${newTotal}`;
 
   document.getElementById('status').style.color = '#666';
   document.getElementById('status').textContent = `Clicked ${count} button(s)`;
@@ -67,13 +69,13 @@ document.getElementById('addAll').addEventListener('click', async () => {
   if (isChase && count > 0) {
     const originalUrl = tab.url;
     setTimeout(() => {
-      chrome.tabs.update(tab.id, { url: originalUrl });
+      browserAPI.tabs.update(tab.id, { url: originalUrl });
     }, 1000);
   }
 });
 
-document.getElementById('reset').addEventListener('click', () => {
-  chrome.storage.local.set({ amexClicks: 0, chaseClicks: 0 });
+document.getElementById('reset').addEventListener('click', async () => {
+  await browserAPI.storage.local.set({ amexClicks: 0, chaseClicks: 0 });
   document.getElementById('amexTotal').textContent = 'Amex: 0';
   document.getElementById('chaseTotal').textContent = 'Chase: 0';
 });
