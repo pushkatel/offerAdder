@@ -101,7 +101,7 @@ async function clickChaseButtons() {
   let count = 0;
 
   for (const container of containers) {
-    const buttons = container.querySelectorAll('[role="button"]');
+    const buttons = container.querySelectorAll('[role="button"]:not([aria-label*="Success Added"])');
     for (const button of buttons) {
       button.click();
       count++;
