@@ -16,12 +16,11 @@
     "gecko_android": {}
   },
   "icons": {
-    "48": "/assets/round48.png",
-    "128": "/assets/round128.png"
+    "128": "/assets/icon-128.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Add All Offers",
-    "default_icon": "/assets/round128.png"
+    "default_icon": "/assets/icon-128.png"
   }
 }
