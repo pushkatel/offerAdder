@@ -63,6 +63,10 @@ document.getElementById('addAll').addEventListener('click', async () => {
   }
 });
 
+document.getElementById('viewSaved').addEventListener('click', () => {
+  browserAPI.tabs.create({ url: browserAPI.runtime.getURL('saved-offers.html') });
+});
+
 async function clickAmexButtons() {
   showOfferOverlay();
 
