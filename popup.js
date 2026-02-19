@@ -1,14 +1,6 @@
 // Cross-browser API wrapper (works on Chrome and Firefox)
 const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
 
-// Load and display counts on popup open
-browserAPI.storage.local.get(['amexClicks', 'chaseClicks']).then((result) => {
-  const amexTotal = result.amexClicks || 0;
-  const chaseTotal = result.chaseClicks || 0;
-  document.getElementById('amexTotal').textContent = `Amex: ${amexTotal}`;
-  document.getElementById('chaseTotal').textContent = `Chase: ${chaseTotal}`;
-});
-
 // URL patterns
 const chasePattern = /chase\.com.*merchantOffers/i;
 
@@ -59,18 +51,8 @@ document.getElementById('addAll').addEventListener('click', async () => {
 
   const count = results[0].result;
 
-  // Update total in storage
-  const storageKey = isChase ? 'chaseClicks' : 'amexClicks';
-  const displayId = isChase ? 'chaseTotal' : 'amexTotal';
-  const label = isChase ? 'Chase' : 'Amex';
-
-  const storageResult = await browserAPI.storage.local.get([storageKey]);
-  const newTotal = (storageResult[storageKey] || 0) + count;
-  await browserAPI.storage.local.set({ [storageKey]: newTotal });
-  document.getElementById(displayId).textContent = `${label}: ${newTotal}`;
-
   document.getElementById('status').style.color = '#666';
-  document.getElementById('status').textContent = `Clicked ${count} button(s)`;
+  document.getElementById('status').textContent = `Done! Added ${count} offer(s)`;
 
   // Navigate back to the original URL after 1 second delay (Chase only)
   if (isChase && count > 0) {
@@ -79,12 +61,6 @@ document.getElementById('addAll').addEventListener('click', async () => {
       browserAPI.tabs.update(tab.id, { url: originalUrl });
     }, 1000);
   }
-});
-
-document.getElementById('reset').addEventListener('click', async () => {
-  await browserAPI.storage.local.set({ amexClicks: 0, chaseClicks: 0 });
-  document.getElementById('amexTotal').textContent = 'Amex: 0';
-  document.getElementById('chaseTotal').textContent = 'Chase: 0';
 });
 
 async function clickAmexButtons() {
