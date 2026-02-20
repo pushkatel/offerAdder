@@ -110,6 +110,9 @@ async function clickChaseButtons() {
   let count = 0;
   const offers = [];
 
+  const cardEl = document.querySelectorAll('.mds-body-medium-heavier')[0];
+  const card = cardEl ? cardEl.textContent.trim() : '';
+
   for (const container of containers) {
     const buttons = container.querySelectorAll('[role="button"]:not([aria-label*="Success Added"])');
     for (const button of buttons) {
@@ -128,7 +131,8 @@ async function clickChaseButtons() {
       offers.push({
         name: name || 'Unknown',
         offer: offer || 'Chase Offer',
-        source: 'chase',
+        source: 'Chase',
+        card: card || 'Unknown Card',
         date: new Date().toISOString()
       });
 

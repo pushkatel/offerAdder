@@ -7,7 +7,7 @@ function render(offers) {
     return;
   }
 
-  let html = '<table><thead><tr><th>Name</th><th>Offer</th><th>Source</th><th>Date Added</th></tr></thead><tbody>';
+  let html = '<table><thead><tr><th>Name</th><th>Offer</th><th>Source</th><th>Card</th><th>Date Added</th></tr></thead><tbody>';
   offers.forEach(o => {
     console.log(o)
     const date = new Date(o.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -15,6 +15,7 @@ function render(offers) {
       + '<td>' + escapeHtml(o.name) + '</td>'
       + '<td>' + escapeHtml(o.offer) + '</td>'
       + '<td>' + escapeHtml(o.source) + '</td>'
+      + '<td>' + escapeHtml(o.card || '') + '</td>'
       + '<td>' + date + '</td>'
       + '</tr>';
   });
