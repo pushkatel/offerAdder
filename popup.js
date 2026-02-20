@@ -49,7 +49,16 @@ document.getElementById('addAll').addEventListener('click', async () => {
     func: clickFunction
   });
 
-  const count = results[0].result;
+  const result = results[0].result;
+  const count = typeof result === 'object' ? result.count : result;
+  const offers = typeof result === 'object' ? result.offers : [];
+
+  // Save offers to local storage
+  if (offers.length > 0) {
+    const stored = await browserAPI.storage.local.get(['savedOffers']);
+    const existing = stored.savedOffers || [];
+    await browserAPI.storage.local.set({ savedOffers: [...existing, ...offers] });
+  }
 
   document.getElementById('status').style.color = '#666';
   document.getElementById('status').textContent = `Done! Added ${count} offer(s)`;
@@ -96,17 +105,37 @@ async function clickChaseButtons() {
   const containers = document.querySelectorAll(
     '[data-testid="grid-items-container"], [data-testid="carousel-curation-category-offer-tile-list-container"], [data-testid="carousel-featured-category-offer-tile-list-container"]'
   );
-  if (!containers.length) return 0;
+  if (!containers.length) return { count: 0, offers: [] };
 
   let count = 0;
+  const offers = [];
 
   for (const container of containers) {
     const buttons = container.querySelectorAll('[role="button"]:not([aria-label*="Success Added"])');
     for (const button of buttons) {
+      let name = '';
+      let offer = '';
+
+      // button -> first child -> 4th child contains name and offer
+      const firstChild = button.children[0];
+      if (firstChild && firstChild.children[3]) {
+        const infoNode = firstChild.children[3];
+        const textNodes = infoNode.querySelectorAll('*');
+        offer = textNodes[0].textContent.trim();
+        name = textNodes[1].textContent.trim();
+      }
+
+      offers.push({
+        name: name || 'Unknown',
+        offer: offer || 'Chase Offer',
+        source: 'chase',
+        date: new Date().toISOString()
+      });
+
       button.click();
       count++;
     }
   }
 
-  return count;
+  return { count, offers };
 }
