@@ -1,5 +1,5 @@
-const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
-const content = document.getElementById('content');
+const browserAPI = typeof browser !== "undefined" ? browser : chrome;
+const content = document.getElementById("content");
 
 function render(offers) {
   if (!offers || offers.length === 0) {
@@ -7,34 +7,50 @@ function render(offers) {
     return;
   }
 
-  let html = '<table><thead><tr><th>Name</th><th>Offer</th><th>Source</th><th>Card</th><th>Date Added</th></tr></thead><tbody>';
-  offers.forEach(o => {
-    console.log(o)
-    const date = new Date(o.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    html += '<tr>'
-      + '<td>' + escapeHtml(o.name) + '</td>'
-      + '<td>' + escapeHtml(o.offer) + '</td>'
-      + '<td>' + escapeHtml(o.source) + '</td>'
-      + '<td>' + escapeHtml(o.card || '') + '</td>'
-      + '<td>' + date + '</td>'
-      + '</tr>';
+  let html =
+    "<table><thead><tr><th>Name</th><th>Offer</th><th>Source</th><th>Card</th><th>Date Added</th></tr></thead><tbody>";
+  offers.forEach((o) => {
+    console.log(o);
+    const date = new Date(o.date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+    html +=
+      "<tr>" +
+      "<td>" +
+      escapeHtml(o.name) +
+      "</td>" +
+      "<td>" +
+      escapeHtml(o.offer) +
+      "</td>" +
+      "<td>" +
+      escapeHtml(o.source) +
+      "</td>" +
+      "<td>" +
+      escapeHtml(o.card || "") +
+      "</td>" +
+      "<td>" +
+      date +
+      "</td>" +
+      "</tr>";
   });
-  html += '</tbody></table>';
+  html += "</tbody></table>";
   html += '<button id="clearAll">Clear All</button>';
   content.innerHTML = html;
 
-  document.getElementById('clearAll').addEventListener('click', async () => {
+  document.getElementById("clearAll").addEventListener("click", async () => {
     await browserAPI.storage.local.set({ savedOffers: [] });
     render([]);
   });
 }
 
 function escapeHtml(str) {
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
-browserAPI.storage.local.get(['savedOffers']).then(result => {
+browserAPI.storage.local.get(["savedOffers"]).then((result) => {
   render(result.savedOffers || []);
 });

@@ -1,92 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      width: 240px;
-      padding: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-      margin: 0;
-    }
-    button {
-      width: 100%;
-      padding: 14px 16px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-      transition: all 0.2s ease;
-    }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
-    }
-    button:active {
-      transform: translateY(0);
-    }
-    button.disabled,
-    button:disabled {
-      background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
-      cursor: not-allowed;
-      box-shadow: none;
-      opacity: 0.7;
-    }
-    button.disabled:hover,
-    button:disabled:hover {
-      transform: none;
-      box-shadow: none;
-    }
-    #status {
-      margin-top: 12px;
-      padding: 8px 12px;
-      font-size: 12px;
-      color: #64748b;
-      background: white;
-      border-radius: 8px;
-      text-align: center;
-      min-height: 20px;
-    }
-    #info {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #94a3b8;
-      cursor: pointer;
-    }
-    #info svg {
-      width: 14px;
-      height: 14px;
-      fill: #94a3b8;
-    }
-    #info span {
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-    #info:hover span {
-      opacity: 1;
-    }
-  </style>
-</head>
-<body>
-  <button id="addAll">Add All Offers</button>
-  <button id="viewSaved" style="margin-top: 8px;">View All Saved Offers</button>
-  <div id="status"></div>
-  <div id="info">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-    <span>made in milwaukee with beer</span>
-  </div>
-  <script src="popup.js"></script>
-</body>
+  <head>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        width: 240px;
+        padding: 16px;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        margin: 0;
+      }
+      button {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        transition: all 0.2s ease;
+      }
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+      }
+      button:active {
+        transform: translateY(0);
+      }
+      button.disabled,
+      button:disabled {
+        background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+        cursor: not-allowed;
+        box-shadow: none;
+        opacity: 0.7;
+      }
+      button.disabled:hover,
+      button:disabled:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      #status {
+        margin-top: 12px;
+        padding: 8px 12px;
+        font-size: 12px;
+        color: #64748b;
+        background: white;
+        border-radius: 8px;
+        text-align: center;
+        min-height: 20px;
+      }
+      #info {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 11px;
+        color: #94a3b8;
+        cursor: pointer;
+      }
+      #info svg {
+        width: 14px;
+        height: 14px;
+        fill: #94a3b8;
+      }
+      #info span {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      #info:hover span {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="addAll">Add All Offers</button>
+    <button id="viewSaved" style="margin-top: 8px">
+      View All Saved Offers
+    </button>
+    <div id="status"></div>
+    <div id="info">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+        />
+      </svg>
+      <span>made in milwaukee with beer</span>
+    </div>
+    <script src="popup.js"></script>
+  </body>
 </html>
