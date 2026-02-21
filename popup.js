@@ -90,6 +90,11 @@ async function clickAmexButtons() {
   showOfferOverlay();
 
   const buttons = document.querySelectorAll('[title="add to list card"]');
+  const cardEl = document.querySelector(
+    '[data-testid="simple_switcher_selected_option_display"]',
+  );
+  const card = cardEl ? cardEl.getAttribute("aria-label") : "Amex";
+
   let count = 0;
   const offers = [];
 
@@ -114,6 +119,7 @@ async function clickAmexButtons() {
       name: name || "Unknown",
       offer: offer || "Amex Offer",
       source: "Amex",
+      card: card || "Unknown Card",
       expiration: expiration || "Unknown",
       date: new Date().toISOString(),
     });
