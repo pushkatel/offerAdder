@@ -90,12 +90,34 @@ async function clickAmexButtons() {
   showOfferOverlay();
 
   const buttons = document.querySelectorAll('[title="add to list card"]');
-  const offerContainer = document.querySelectorAll(
-    '[data-testid="listViewContainer"]',
-  );
   let count = 0;
+  const offers = [];
 
   buttons.forEach((button) => {
+    const parent = button.parentElement;
+    const grandparent = parent ? parent.parentElement : null;
+    const offerDetails = grandparent
+      ? [...grandparent.children].find((el) => el !== parent)
+      : null;
+
+    let name = "";
+    let offer = "";
+
+    if (offerDetails) {
+      const children = offerDetails.children;
+      name = children[0].textContent.trim();
+      offer = children[1].textContent.trim();
+      expiration = children[2].textContent.trim();
+    }
+
+    offers.push({
+      name: name || "Unknown",
+      offer: offer || "Amex Offer",
+      source: "Amex",
+      expiration: expiration || "Unknown",
+      date: new Date().toISOString(),
+    });
+
     button.click();
     count++;
   });
@@ -111,7 +133,7 @@ async function clickAmexButtons() {
   });
 
   removeOfferOverlay();
-  return count;
+  return { count, offers };
 }
 
 async function clickChaseButtons() {
