@@ -8,7 +8,7 @@ function render(offers) {
   }
 
   let html =
-    "<table><thead><tr><th>Name</th><th>Offer</th><th>Source</th><th>Card</th><th>Date Added</th></tr></thead><tbody>";
+    "<table><thead><tr><th>Name</th><th>Offer</th><th>Source</th><th>Card</th><th>Expiration</th><th>Date Added</th></tr></thead><tbody>";
   offers.forEach((o) => {
     console.log(o);
     const date = new Date(o.date).toLocaleDateString("en-US", {
@@ -29,6 +29,9 @@ function render(offers) {
       "</td>" +
       "<td>" +
       escapeHtml(o.card || "") +
+      "</td>" +
+      "<td>" +
+      escapeHtml(o.expiration || "") +
       "</td>" +
       "<td>" +
       date +
