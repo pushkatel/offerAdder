@@ -41,6 +41,8 @@ document.getElementById("addAll").addEventListener("click", async () => {
   }
 
   const clickFunction = isChase ? clickChaseButtons : clickAmexButtons;
+  const testMode = document.getElementById("testMode").checked;
+  const limit = testMode ? 5 : 0;
 
   if (isAmex) {
     await browserAPI.scripting.executeScript({
@@ -52,6 +54,7 @@ document.getElementById("addAll").addEventListener("click", async () => {
   const results = await browserAPI.scripting.executeScript({
     target: { tabId: tab.id },
     func: clickFunction,
+    args: [limit],
   });
 
   const result = results[0].result;
@@ -86,10 +89,11 @@ document.getElementById("viewSaved").addEventListener("click", () => {
   });
 });
 
-async function clickAmexButtons() {
+async function clickAmexButtons(limit) {
   showOfferOverlay();
 
-  const buttons = document.querySelectorAll('[title="add to list card"]');
+  let buttons = document.querySelectorAll('[title="add to list card"]');
+  if (limit > 0) buttons = [...buttons].slice(0, limit);
   const cardEl = document.querySelector(
     '[data-testid="simple_switcher_selected_option_display"]',
   );
@@ -142,7 +146,7 @@ async function clickAmexButtons() {
   return { count, offers };
 }
 
-async function clickChaseButtons() {
+async function clickChaseButtons(limit) {
   const containers = document.querySelectorAll(
     '[data-testid="grid-items-container"], [data-testid="carousel-curation-category-offer-tile-list-container"], [data-testid="carousel-featured-category-offer-tile-list-container"]',
   );
@@ -159,6 +163,7 @@ async function clickChaseButtons() {
       '[role="button"]:not([aria-label*="Success Added"])',
     );
     for (const button of buttons) {
+      if (limit > 0 && count >= limit) break;
       let name = "";
       let offer = "";
 
@@ -167,8 +172,8 @@ async function clickChaseButtons() {
       if (firstChild && firstChild.children[3]) {
         const infoNode = firstChild.children[3];
         const textNodes = infoNode.querySelectorAll("*");
-        offer = textNodes[0].textContent.trim();
-        name = textNodes[1].textContent.trim();
+        name = textNodes[0].textContent.trim();
+        offer = textNodes[1].textContent.trim();
       }
 
       offers.push({
@@ -182,6 +187,7 @@ async function clickChaseButtons() {
       button.click();
       count++;
     }
+    if (limit > 0 && count >= limit) break;
   }
 
   return { count, offers };
