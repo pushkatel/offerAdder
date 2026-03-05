@@ -1,44 +1,41 @@
 # Offers Adder
 
-A Chrome extension that automatically adds all Chase and American Express offers to your account with one click.
+**Stop leaving free money on the table.** Offers Adder activates all your Chase and American Express card offers in one click — no more scrolling through pages and clicking "Add" fifty times.
+
+![Offers Adder in action](assets/main.png)
+
+## Install
+
+| Browser | Link |
+|---------|------|
+| Chrome | [Chrome Web Store](https://chromewebstore.google.com/detail/offers-adder/lgnjjahmebcbjbbbhamofkiclbnecefn) |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/offers-adder/) |
+| Safari | Coming soon |
+
+## How It Works
+
+1. Log into your **Chase** or **Amex** account and go to the offers page
+2. Click the Offers Adder icon in your toolbar
+3. Hit the button — done. Every offer, added instantly.
+
+That's it. No signup, no account, no data collected. It just clicks the buttons so you don't have to.
 
 ## Features
 
-- **One-Click Activation**: Add all available offers instantly
-- **Supports Both Banks**: Works on Chase and American Express offer pages
-- **Progress Tracking**: Keeps count of total offers added for each bank
-- **Smart Detection**: Automatically detects which offers page you're on and updates the button text accordingly
+- **One click, all offers** — adds every available offer to your card(s) automatically
+- **Chase + Amex** — works on both banks' offer pages
+- **Saved Offers view** — browse and search all the offers you've added in one place
+- **Running total** — tracks how many offers you've added over time
 
-## Installation
+![Saved Offers view](assets/secondart.png)
 
-1. Clone or download this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked" and select the extension folder
+## Why?
 
-## Usage
+Chase and Amex give you cash back, points, and statement credits through card-linked offers — but only if you manually add them first. Most people never bother because it takes forever to click through them all. This extension does it in about 3 seconds.
 
-1. Navigate to your offers page:
-   - **Chase**: Go to your Chase account and navigate to the merchant offers section (`chase.com/.../merchantOffers`)
-   - **Amex**: Go to `americanexpress.com/offers`
+## Privacy
 
-2. Click the extension icon in your browser toolbar
-
-3. Click "Add All Chase Offers" or "Add All Amex Offers" (button text updates based on the page you're on)
-
-4. The extension will automatically click all "Add to Card" buttons and display how many offers were added
-
-## Notes
-
-- The extension only works on Chase and Amex offers pages. On other pages, the button will be disabled.
-- For Chase, the page will automatically refresh after adding offers to update the offer states.
-- Use the "Reset Count" button to clear your running totals.
-
-## Permissions
-
-- `scripting`: Required to interact with page elements
-- `tabs`: Required to detect the current page URL
-- `storage`: Required to save offer count totals
+Offers Adder runs entirely in your browser. It doesn't collect, store, or send your data anywhere. The only permissions it needs are to interact with the offers pages you're already on.
 
 ## License
 
