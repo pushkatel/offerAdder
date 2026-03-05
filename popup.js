@@ -83,6 +83,16 @@ document.getElementById("addAll").addEventListener("click", async () => {
   }
 });
 
+let infoClickCount = 0;
+document.getElementById("info").addEventListener("click", () => {
+  infoClickCount++;
+  if (infoClickCount >= 4) {
+    const container = document.getElementById("testModeContainer");
+    container.style.display = container.style.display === "none" ? "flex" : "none";
+    infoClickCount = 0;
+  }
+});
+
 document.getElementById("viewSaved").addEventListener("click", () => {
   browserAPI.tabs.create({
     url: browserAPI.runtime.getURL("saved-offers.html"),
