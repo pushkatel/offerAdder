@@ -61,6 +61,13 @@ document.getElementById("addAll").addEventListener("click", async () => {
   const count = typeof result === "object" ? result.count : result;
   const offers = typeof result === "object" ? result.offers : [];
 
+  // Format offer data before saving
+  offers.forEach((offer) => {
+    if (offer.source === "Amex") {
+      offer.card = formatAmexCardName(offer.card);
+    }
+  });
+
   // Save offers to local storage
   if (offers.length > 0) {
     const stored = await browserAPI.storage.local.get(["savedOffers"]);
@@ -98,6 +105,16 @@ document.getElementById("viewSaved").addEventListener("click", () => {
     url: browserAPI.runtime.getURL("saved-offers.html"),
   });
 });
+
+function formatAmexCardName(raw) {
+  if (!raw) return raw;
+  return raw
+    .replace(/[®™©]/g, "")
+    .replace(/\b(ending|end)\s+in\s+/i, "")
+    .replace(/\.\s*$/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 async function clickAmexButtons(limit) {
   showOfferOverlay();
