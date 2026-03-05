@@ -17,25 +17,25 @@ let searchQuery = "";
 
 function sortOffers(offers) {
   if (!sortCol) return offers;
-  return [...offers].sort((a, b) => {
-    const va = (a[sortCol] || "").toString();
-    const vb = (b[sortCol] || "").toString();
+  return [...offers].sort((first, second) => {
+    const valA = (first[sortCol] || "").toString();
+    const valB = (second[sortCol] || "").toString();
     if (sortCol === "date") {
       return sortAsc
-        ? new Date(va) - new Date(vb)
-        : new Date(vb) - new Date(va);
+        ? new Date(valA) - new Date(valB)
+        : new Date(valB) - new Date(valA);
     }
-    const cmp = va.localeCompare(vb, undefined, { sensitivity: "base" });
+    const cmp = valA.localeCompare(valB, undefined, { sensitivity: "base" });
     return sortAsc ? cmp : -cmp;
   });
 }
 
 function filterOffers(offers) {
   if (!searchQuery) return offers;
-  const q = searchQuery.toLowerCase();
-  return offers.filter((o) =>
-    [o.name, o.offer, o.source, o.card, o.expiration].some((v) =>
-      (v || "").toLowerCase().includes(q),
+  const query = searchQuery.toLowerCase();
+  return offers.filter((offer) =>
+    [offer.name, offer.offer, offer.source, offer.card, offer.expiration].some((value) =>
+      (value || "").toLowerCase().includes(query),
     ),
   );
 }
@@ -67,19 +67,19 @@ function render(offers) {
   });
   html += "</tr></thead><tbody>";
 
-  sorted.forEach((o) => {
-    const date = new Date(o.date).toLocaleDateString("en-US", {
+  sorted.forEach((offer) => {
+    const date = new Date(offer.date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
     html +=
       "<tr>" +
-      "<td>" + escapeHtml(o.name) + "</td>" +
-      "<td>" + escapeHtml(o.offer) + "</td>" +
-      "<td>" + escapeHtml(o.source) + "</td>" +
-      "<td>" + escapeHtml(o.card || "") + "</td>" +
-      "<td>" + escapeHtml(o.expiration || "") + "</td>" +
+      "<td>" + escapeHtml(offer.name) + "</td>" +
+      "<td>" + escapeHtml(offer.offer) + "</td>" +
+      "<td>" + escapeHtml(offer.source) + "</td>" +
+      "<td>" + escapeHtml(offer.card || "") + "</td>" +
+      "<td>" + escapeHtml(offer.expiration || "") + "</td>" +
       "<td>" + date + "</td>" +
       "</tr>";
   });
@@ -112,8 +112,8 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-document.getElementById("searchBox").addEventListener("input", (e) => {
-  searchQuery = e.target.value;
+document.getElementById("searchBox").addEventListener("input", (event) => {
+  searchQuery = event.target.value;
   render(allOffers);
 });
 
