@@ -65,6 +65,7 @@ document.getElementById("addAll").addEventListener("click", async () => {
   offers.forEach((offer) => {
     if (offer.source === "Amex") {
       offer.card = formatAmexCardName(offer.card);
+      offer.expiration = formatAmexExpiration(offer.expiration);
     } else if (offer.source === "Chase") {
       offer.card = formatChaseCardName(offer.card);
     }
@@ -114,6 +115,11 @@ function formatChaseCardName(raw) {
     .replace(/\(\.{0,3}(\d+)\)/, "$1")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function formatAmexExpiration(raw) {
+  if (!raw) return raw;
+  return raw.replace(/^expires\s+/i, "").trim();
 }
 
 function formatAmexCardName(raw) {
