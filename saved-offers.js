@@ -13,6 +13,7 @@ const columns = [
 let sortCol = null;
 let sortAsc = true;
 let allOffers = [];
+let searchQuery = "";
 
 function sortOffers(offers) {
   if (!sortCol) return offers;
@@ -29,6 +30,16 @@ function sortOffers(offers) {
   });
 }
 
+function filterOffers(offers) {
+  if (!searchQuery) return offers;
+  const q = searchQuery.toLowerCase();
+  return offers.filter((o) =>
+    [o.name, o.offer, o.source, o.card, o.expiration].some((v) =>
+      (v || "").toLowerCase().includes(q),
+    ),
+  );
+}
+
 function render(offers) {
   allOffers = offers;
   if (!offers || offers.length === 0) {
@@ -36,7 +47,13 @@ function render(offers) {
     return;
   }
 
-  const sorted = sortOffers(offers);
+  const filtered = filterOffers(offers);
+  if (filtered.length === 0) {
+    content.innerHTML = '<p class="empty">No offers match your search.</p>';
+    return;
+  }
+
+  const sorted = sortOffers(filtered);
 
   let html = "<table><thead><tr>";
   columns.forEach((col) => {
@@ -94,6 +111,11 @@ function escapeHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
+
+document.getElementById("searchBox").addEventListener("input", (e) => {
+  searchQuery = e.target.value;
+  render(allOffers);
+});
 
 browserAPI.storage.local.get(["savedOffers"]).then((result) => {
   render(result.savedOffers || []);
