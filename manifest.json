@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Offers Adder",
-  "version": "1.2",
+  "version": "2.0",
   "description": "Automatically adds all Chase and Amex Offers to your account with one click.",
   "permissions": ["scripting", "tabs", "storage"],
   "host_permissions": [
