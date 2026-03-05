@@ -65,6 +65,8 @@ document.getElementById("addAll").addEventListener("click", async () => {
   offers.forEach((offer) => {
     if (offer.source === "Amex") {
       offer.card = formatAmexCardName(offer.card);
+    } else if (offer.source === "Chase") {
+      offer.card = formatChaseCardName(offer.card);
     }
   });
 
@@ -105,6 +107,14 @@ document.getElementById("viewSaved").addEventListener("click", () => {
     url: browserAPI.runtime.getURL("saved-offers.html"),
   });
 });
+
+function formatChaseCardName(raw) {
+  if (!raw) return raw;
+  return raw
+    .replace(/\(\.{0,3}(\d+)\)/, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 function formatAmexCardName(raw) {
   if (!raw) return raw;
